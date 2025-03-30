@@ -68,6 +68,7 @@ export async function getLoomers(options: QueryOptions = {}): Promise<Connection
     query, 
     { first, after, filter, orderBy }
   );
+
   return response.loomersCollection;
 }
 

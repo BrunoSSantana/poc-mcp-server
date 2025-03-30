@@ -66,22 +66,42 @@ describe('API Services', () => {
         pageInfo: {
           hasNextPage: false,
           hasPreviousPage: false,
-          endCursor: undefined
+          startCursor: 'cursor1',
+          endCursor: 'cursor1'
         },
         totalCount: 1
       }
 
       const mockResponse = {
-        GetLoomers: mockLoomers
+        loomersCollection: mockLoomers
       }
 
       vi.mocked(mockClient.request).mockResolvedValueOnce(mockResponse)
 
-      const result = await getLoomers()
+      const result = await getLoomers({ first: 1 })
+
+      expect(mockClient.request).toHaveBeenCalledWith(
+        expect.stringContaining('query GetLoomers'),
+        expect.objectContaining({
+          first: 1,
+          after: undefined,
+          filter: undefined,
+          orderBy: undefined
+        })
+      )
 
       expect(result).toEqual(mockLoomers)
-      expect(mockClient.request).toHaveBeenCalledTimes(1)
-      expect(result.edges[0].node).toEqual({
+      expect(result.edges).toHaveLength(1)
+      expect(result.totalCount).toBe(1)
+      expect(result.pageInfo).toEqual({
+        hasNextPage: false,
+        hasPreviousPage: false,
+        startCursor: 'cursor1',
+        endCursor: 'cursor1'
+      })
+
+      const loomer = result.edges[0].node
+      expect(loomer).toEqual({
         id: '1',
         nodeId: '1',
         createdAt: '2024-03-30T00:00:00Z',
