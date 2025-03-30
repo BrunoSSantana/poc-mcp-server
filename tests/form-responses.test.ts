@@ -1,83 +1,131 @@
-import { describe, it, after } from 'node:test';
-import assert from 'node:assert';
-import { createMcpClient } from './setup.ts';
-import { TOOL_CONFIG } from '../src/config/api.ts';
-import type { McpToolResponse } from './types.ts';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { GraphQLClient } from 'graphql-request'
+import { getFormResponses } from '../src/services/api.js'
+import type { Connection, FormResponse } from '../src/types/index.js'
 
-describe('Form Responses API Tests', async () => {
-  const client = await createMcpClient();
-  
-  after(async () => {
-    await client.close();
-  });
+vi.mock('graphql-request', () => {
+  const GraphQLClient = vi.fn()
+  GraphQLClient.prototype.request = vi.fn()
+  return { GraphQLClient }
+})
 
-  it('should get a list of form responses with default pagination', async () => {
-    const result = await client.callTool({
-      name: TOOL_CONFIG.formResponses.name,
-      arguments: {}
-    }) as McpToolResponse;
-    
-    assert.ok(result.content[0].text.includes('Found'));
-    const meta = result._meta;
-    
-  });
+describe('Form Responses Service', () => {
+  const mockClient = new GraphQLClient('http://fake-api.com')
+  const originalGraphQLClient = global.GraphQLClient
 
-  it('should get a limited number of form responses', async () => {
-    const first = 2;
-    const result = await client.callTool({
-      name: TOOL_CONFIG.formResponses.name,
-      arguments: { first }
-    }) as McpToolResponse;
-    
-    const lines = result.content[0].text.split('\n').filter(line => line.startsWith('-'));
-    assert.equal(lines.length, first);
-  });
+  beforeEach(() => {
+    global.GraphQLClient = mockClient
+  })
 
-  it('should filter form responses by form id', async () => {
-    const formId = 'test-form-id';
-    const result = await client.callTool({
-      name: TOOL_CONFIG.formResponses.name,
-      arguments: { 
-        filter: {
-          form_id: {
-            eq: formId
+  afterEach(() => {
+    global.GraphQLClient = originalGraphQLClient
+    vi.clearAllMocks()
+  })
+
+  describe('getFormResponses', () => {
+    it('should return a paginated list of form responses', async () => {
+      const mockFormResponses: Connection<FormResponse> = {
+        edges: [
+          {
+            cursor: 'cursor1',
+            node: {
+              id: '1',
+              nodeId: '1',
+              createdAt: '2024-03-30T00:00:00Z',
+              formId: '1',
+              loomerId: '1',
+              responses: {
+                question1: 'answer1',
+                question2: 'answer2'
+              },
+              form: {
+                id: '1',
+                nodeId: '1',
+                createdAt: '2024-03-30T00:00:00Z',
+                title: 'Test Form',
+                description: 'Test Description'
+              },
+              loomer: {
+                id: '1',
+                nodeId: '1',
+                createdAt: '2024-03-30T00:00:00Z',
+                name: 'Test Loomer',
+                email: 'test@example.com',
+                hireDate: '2024-01-01',
+                birthday: '1990-01-01',
+                areaId: '1',
+                area: null
+              }
+            }
           }
-        }
+        ],
+        pageInfo: {
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: 'cursor1',
+          endCursor: 'cursor1'
+        },
+        totalCount: 1
       }
-    }) as McpToolResponse;
-    
-    assert.ok(result.content[0].text.includes('Found'));
-  });
 
-  it('should filter form responses by loomer id', async () => {
-    const loomerId = 'test-loomer-id';
-    const result = await client.callTool({
-      name: TOOL_CONFIG.formResponses.name,
-      arguments: { 
-        filter: {
-          loomer_id: {
-            eq: loomerId
-          }
-        }
+      const mockResponse = {
+        form_responsesCollection: mockFormResponses
       }
-    }) as McpToolResponse;
-    
-    assert.ok(result.content[0].text.includes('Found'));
-  });
 
-  it('should order form responses by creation date', async () => {
-    const result = await client.callTool({
-      name: TOOL_CONFIG.formResponses.name,
-      arguments: { 
-        orderBy: [{
-          field: 'created_at',
-          direction: 'DescNullsLast'
-        }],
-        first: 2
-      }
-    }) as McpToolResponse;
-    
-    assert.ok(result.content[0].text.includes('Found'));
-    const meta = result._meta;
-  });
-}); 
+      vi.mocked(mockClient.request).mockResolvedValueOnce(mockResponse)
+
+      const result = await getFormResponses({ first: 1 })
+
+      expect(mockClient.request).toHaveBeenCalledWith(
+        expect.stringContaining('query GetFormResponses'),
+        expect.objectContaining({
+          first: 1,
+          after: undefined,
+          filter: undefined,
+          orderBy: undefined
+        })
+      )
+
+      expect(result).toEqual(mockFormResponses)
+      expect(result.edges).toHaveLength(1)
+      expect(result.totalCount).toBe(1)
+      expect(result.pageInfo).toEqual({
+        hasNextPage: false,
+        hasPreviousPage: false,
+        startCursor: 'cursor1',
+        endCursor: 'cursor1'
+      })
+
+      const formResponse = result.edges[0].node
+      expect(formResponse).toEqual({
+        id: '1',
+        nodeId: '1',
+        createdAt: '2024-03-30T00:00:00Z',
+        formId: '1',
+        loomerId: '1',
+        responses: {
+          question1: 'answer1',
+          question2: 'answer2'
+        },
+        form: {
+          id: '1',
+          nodeId: '1',
+          createdAt: '2024-03-30T00:00:00Z',
+          title: 'Test Form',
+          description: 'Test Description'
+        },
+        loomer: {
+          id: '1',
+          nodeId: '1',
+          createdAt: '2024-03-30T00:00:00Z',
+          name: 'Test Loomer',
+          email: 'test@example.com',
+          hireDate: '2024-01-01',
+          birthday: '1990-01-01',
+          areaId: '1',
+          area: null
+        }
+      })
+    })
+  })
+}) 

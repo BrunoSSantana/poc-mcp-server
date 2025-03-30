@@ -11,5 +11,8 @@ export default defineConfig({
       include: ['src/**/*.ts'],
       exclude: ['src/**/*.d.ts', 'src/**/*.test.ts']
     }
+  },
+  resolve: {
+    extensions: ['.ts', '.js']
   }
 }) 

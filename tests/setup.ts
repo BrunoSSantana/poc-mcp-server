@@ -1,5 +1,5 @@
-import { Client } from "@modelcontextprotocol/sdk/client/index.ts";
-import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.ts";
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 
 export async function createMcpClient() {
   const transport = new StdioClientTransport({

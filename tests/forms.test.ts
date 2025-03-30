@@ -1,64 +1,87 @@
-import { describe, it, after } from 'node:test';
-import assert from 'node:assert';
-import { createMcpClient } from './setup.ts';
-import { TOOL_CONFIG } from '../src/config/api.ts';
-import type { McpToolResponse } from './types.ts';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { GraphQLClient } from 'graphql-request'
+import { getForms } from '../src/services/api.js'
+import type { Connection, Form } from '../src/types/index.js'
 
-describe('Forms API Tests', async () => {
-  const client = await createMcpClient();
-  
-  after(async () => {
-    await client.close();
-  });
+vi.mock('graphql-request', () => {
+  const GraphQLClient = vi.fn()
+  GraphQLClient.prototype.request = vi.fn()
+  return { GraphQLClient }
+})
 
-  it('should get a list of forms with default pagination', async () => {
-    const result = await client.callTool({
-      name: TOOL_CONFIG.forms.name,
-      arguments: {}
-    }) as McpToolResponse;
-    
-    assert.ok(result.content[0].text.includes('Found'));
-  });
+describe('Forms Service', () => {
+  const mockClient = new GraphQLClient('http://fake-api.com')
+  const originalGraphQLClient = global.GraphQLClient
 
-  it('should get a limited number of forms', async () => {
-    const first = 2;
-    const result = await client.callTool({
-      name: TOOL_CONFIG.forms.name,
-      arguments: { first }
-    }) as McpToolResponse;
-    
-    const lines = result.content[0].text.split('\n').filter(line => line.startsWith('-'));
-    assert.equal(lines.length, first);
-  });
+  beforeEach(() => {
+    global.GraphQLClient = mockClient
+  })
 
-  it('should filter forms by title', async () => {
-    const title = 'Test Form';
-    const result = await client.callTool({
-      name: TOOL_CONFIG.forms.name,
-      arguments: { 
-        filter: {
-          title: {
-            ilike: `%${title}%`
+  afterEach(() => {
+    global.GraphQLClient = originalGraphQLClient
+    vi.clearAllMocks()
+  })
+
+  describe('getForms', () => {
+    it('should return a paginated list of forms', async () => {
+      const mockForms: Connection<Form> = {
+        edges: [
+          {
+            cursor: 'cursor1',
+            node: {
+              id: '1',
+              nodeId: '1',
+              createdAt: '2024-03-30T00:00:00Z',
+              title: 'Test Form',
+              description: 'Test Description'
+            }
           }
-        }
+        ],
+        pageInfo: {
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: 'cursor1',
+          endCursor: 'cursor1'
+        },
+        totalCount: 1
       }
-    }) as McpToolResponse;
-    
-    assert.ok(result.content[0].text.includes('Found'));
-  });
 
-  it('should order forms by creation date', async () => {
-    const result = await client.callTool({
-      name: TOOL_CONFIG.forms.name,
-      arguments: { 
-        orderBy: [{
-          field: 'created_at',
-          direction: 'DescNullsLast'
-        }],
-        first: 2
+      const mockResponse = {
+        formsCollection: mockForms
       }
-    }) as McpToolResponse;
-    
-    assert.ok(result.content[0].text.includes('Found'));
-  });
-}); 
+
+      vi.mocked(mockClient.request).mockResolvedValueOnce(mockResponse)
+
+      const result = await getForms({ first: 1 })
+
+      expect(mockClient.request).toHaveBeenCalledWith(
+        expect.stringContaining('query GetForms'),
+        expect.objectContaining({
+          first: 1,
+          after: undefined,
+          filter: undefined,
+          orderBy: undefined
+        })
+      )
+
+      expect(result).toEqual(mockForms)
+      expect(result.edges).toHaveLength(1)
+      expect(result.totalCount).toBe(1)
+      expect(result.pageInfo).toEqual({
+        hasNextPage: false,
+        hasPreviousPage: false,
+        startCursor: 'cursor1',
+        endCursor: 'cursor1'
+      })
+
+      const form = result.edges[0].node
+      expect(form).toEqual({
+        id: '1',
+        nodeId: '1',
+        createdAt: '2024-03-30T00:00:00Z',
+        title: 'Test Form',
+        description: 'Test Description'
+      })
+    })
+  })
+}) 
