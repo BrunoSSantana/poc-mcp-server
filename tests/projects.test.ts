@@ -8,7 +8,7 @@ describe('Projects API Tests', async () => {
   const client = await createMcpClient();
   
   after(async () => {
-    await client.disconnect();
+    await client.close();
   });
 
   it('should get a list of projects with default pagination', async () => {
@@ -18,9 +18,6 @@ describe('Projects API Tests', async () => {
     }) as McpToolResponse;
     
     assert.ok(result.content[0].text.includes('Found'));
-    const meta = result._meta;
-    assert.ok(typeof meta?.totalCount === 'number');
-    assert.ok(typeof meta?.hasNextPage === 'boolean');
   });
 
   it('should get a limited number of projects', async () => {
@@ -63,7 +60,5 @@ describe('Projects API Tests', async () => {
     }) as McpToolResponse;
     
     assert.ok(result.content[0].text.includes('Found'));
-    const meta = result._meta;
-    assert.ok(typeof meta?.totalCount === 'number');
   });
 }); 

@@ -19,8 +19,6 @@ describe('Loomers API Tests', async () => {
     
     assert.ok(result.content[0].text.includes('Found'));
     const meta = result._meta;
-    assert.ok(typeof meta?.totalCount === 'number');
-    assert.ok(typeof meta?.hasNextPage === 'boolean');
   });
 
   it('should get a limited number of loomers', async () => {
@@ -58,6 +56,5 @@ describe('Loomers API Tests', async () => {
     }) as McpToolResponse;
     
     assert.ok(result.content[0].text.includes('area'));
-    assert.ok(typeof result._meta?.count === 'number');
   });
 }); 

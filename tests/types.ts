@@ -1,13 +1,8 @@
-import type { McpResponse, McpContent } from '../src/types/index.ts';
-
-export interface McpToolResponse extends McpResponse {
-  content: McpContent[];
-}
-
-export interface McpClient {
-  callTool: (params: {
-    name: string;
-    arguments: Record<string, unknown>;
-  }) => Promise<McpToolResponse>;
-  close: () => Promise<void>;
+export interface McpToolResponse {
+  content: Array<{
+    type: string;
+    text: string;
+    [key: string]: unknown;
+  }>;
+  [key: string]: unknown;
 } 
