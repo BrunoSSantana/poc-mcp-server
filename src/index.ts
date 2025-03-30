@@ -1,10 +1,10 @@
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { SERVER_CONFIG } from './config/api.js';
-import { getLoomersTool, getLoomersInAreaTool } from './tools/loomers.js';
-import { getFormsTool } from './tools/forms.js';
-import { getFormResponsesTool } from './tools/form-responses.js';
-import { getProjectsTool } from './tools/projects.js';
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.ts';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.ts';
+import { SERVER_CONFIG } from './config/api.ts';
+import { getLoomersTool, getLoomersInAreaTool } from './tools/loomers.ts';
+import { getFormsTool } from './tools/forms.ts';
+import { getFormResponsesTool } from './tools/form-responses.ts';
+import { getProjectsTool } from './tools/projects.ts';
 
 /**
  * Initialize the MCP server and register all tools

@@ -1,8 +1,8 @@
 import { z } from 'zod';
-import type { QueryOptions, McpResponse, McpTextContent, Connection, Form } from '../types/index.js';
-import { getForms } from '../services/api.js';
-import { TOOL_CONFIG } from '../config/api.js';
-import { formatDate, truncateText } from '../utils/language.js';
+import type { QueryOptions, McpResponse, McpTextContent, Connection, Form } from '../types/index.ts';
+import { getForms } from '../services/api.ts';
+import { TOOL_CONFIG } from '../config/api.ts';
+import { formatDate, truncateText } from '../utils/language.ts';
 
 /**
  * MCP tool definition for getting forms

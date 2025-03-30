@@ -1,9 +1,7 @@
-import { z } from 'zod';
-
 /**
  * Query options for paginated requests
  */
-export type QueryOptions = {
+export interface QueryOptions {
   first?: number;
   after?: string;
   filter?: Record<string, unknown>;
@@ -11,40 +9,41 @@ export type QueryOptions = {
     field: string;
     direction: 'AscNullsFirst' | 'AscNullsLast' | 'DescNullsFirst' | 'DescNullsLast';
   }>;
-};
+}
 
 /**
  * MCP response with text content
  */
-export type McpResponse = {
+export interface McpResponse {
   content: McpContent[];
   _meta?: Record<string, unknown>;
   isError?: boolean;
-};
+  [key: string]: unknown;
+}
 
 /**
  * MCP text content
  */
-export type McpTextContent = {
+export interface McpTextContent {
   type: "text";
   text: string;
   [key: string]: unknown;
-};
+}
 
 /**
  * MCP image content
  */
-export type McpImageContent = {
+export interface McpImageContent {
   type: "image";
   data: string;
   mimeType: string;
   [key: string]: unknown;
-};
+}
 
 /**
  * MCP resource content
  */
-export type McpResourceContent = {
+export interface McpResourceContent {
   type: "resource";
   resource: {
     text: string;
@@ -58,7 +57,7 @@ export type McpResourceContent = {
     [key: string]: unknown;
   };
   [key: string]: unknown;
-};
+}
 
 /**
  * MCP content
@@ -68,74 +67,83 @@ export type McpContent = McpTextContent | McpImageContent | McpResourceContent;
 /**
  * Loomer type
  */
-export type Loomer = {
+export interface Loomer {
+  nodeId: string;
   id: string;
-  name: string;
+  createdAt: string;
+  name: string | null;
   email: string | null;
+  hireDate: string | null;
+  birthday: string | null;
+  areaId: string | null;
   area: Area | null;
-};
+  formResponses?: Connection<FormResponse>;
+}
 
 /**
  * Form type
  */
-export type Form = {
+export interface Form {
+  nodeId: string;
   id: string;
-  title: string;
-  description: string | null;
   createdAt: string;
-  updatedAt: string;
-};
+  title: string | null;
+  description: string | null;
+  formResponses?: Connection<FormResponse>;
+}
 
 /**
  * Form response type
  */
-export type FormResponse = {
+export interface FormResponse {
+  nodeId: string;
   id: string;
-  form: Form;
-  loomer: Loomer;
-  answers: Array<{
-    questionId: string;
-    answer: string;
-  }>;
   createdAt: string;
-  updatedAt: string;
-};
+  formId: string | null;
+  loomerId: string | null;
+  responses: Record<string, unknown>;
+  form: Form | null;
+  loomer: Loomer | null;
+}
 
 /**
  * Project type
  */
-export type Project = {
+export interface Project {
+  nodeId: string;
   id: string;
-  name: string;
-  description: string | null;
-  status: 'ACTIVE' | 'INACTIVE' | 'ARCHIVED';
   createdAt: string;
-  updatedAt: string;
-};
+  name: string | null;
+}
 
 /**
  * Area type
  */
-export type Area = {
+export interface Area {
+  nodeId: string;
   id: string;
-  name: string;
-};
+  createdAt: string;
+  name: string | null;
+  loomers?: Connection<Loomer>;
+}
 
 /**
  * GraphQL response types
  */
-export type PageInfo = {
-  hasNextPage: boolean;
+export interface PageInfo {
   endCursor?: string;
-};
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor?: string;
+}
 
-export type Edge<T> = {
-  node: T;
+export interface Edge<T> {
   cursor: string;
-};
+  node: T;
+}
 
-export type Connection<T> = {
+export interface Connection<T> {
   edges: Edge<T>[];
   pageInfo: PageInfo;
   totalCount: number;
-}; 
+} 

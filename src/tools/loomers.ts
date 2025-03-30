@@ -1,8 +1,8 @@
 import { z } from 'zod';
-import type { QueryOptions, McpResponse, McpTextContent, Connection, Loomer } from '../types/index.js';
-import { getLoomers, getLoomersInArea } from '../services/api.js';
-import { TOOL_CONFIG } from '../config/api.js';
-import { generateCountResponse } from '../utils/language.js';
+import type { QueryOptions, McpResponse, McpTextContent, Connection, Loomer } from '../types/index.ts';
+import { getLoomers, getLoomersInArea } from '../services/api.ts';
+import { TOOL_CONFIG } from '../config/api.ts';
+import { generateCountResponse } from '../utils/language.ts';
 
 /**
  * MCP tool definition for getting Loomers

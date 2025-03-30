@@ -1,8 +1,8 @@
 import { z } from 'zod';
-import type { QueryOptions, McpResponse, McpTextContent, Connection, Project } from '../types/index.js';
-import { getProjects } from '../services/api.js';
-import { TOOL_CONFIG } from '../config/api.js';
-import { formatDate } from '../utils/language.js';
+import type { QueryOptions, McpResponse, McpTextContent, Connection, Project } from '../types/index.ts';
+import { getProjects } from '../services/api.ts';
+import { TOOL_CONFIG } from '../config/api.ts';
+import { formatDate } from '../utils/language.ts';
 
 /**
  * MCP tool definition for getting projects

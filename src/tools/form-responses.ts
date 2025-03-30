@@ -1,8 +1,8 @@
 import { z } from 'zod';
-import type { QueryOptions, McpResponse, McpTextContent, Connection, FormResponse } from '../types/index.js';
-import { getFormResponses } from '../services/api.js';
-import { TOOL_CONFIG } from '../config/api.js';
-import { formatDate } from '../utils/language.js';
+import type { QueryOptions, McpResponse, McpTextContent, Connection, FormResponse } from '../types/index.ts';
+import { getFormResponses } from '../services/api.ts';
+import { TOOL_CONFIG } from '../config/api.ts';
+import { formatDate } from '../utils/language.ts';
 
 /**
  * MCP tool definition for getting form responses
@@ -39,7 +39,7 @@ export const getFormResponsesTool = {
         const date = formatDate(formResponse.createdAt);
         const formTitle = formResponse.form?.title || 'Unknown Form';
         const loomerName = formResponse.loomer?.name || 'Unknown User';
-        const responseCount = formResponse.answers.length;
+        const responseCount = Object.keys(formResponse.responses).length;
         
         return `- Response to "${formTitle}" by ${loomerName} (${date})\n  Contains ${responseCount} answer${responseCount === 1 ? '' : 's'}`;
       }).join('\n\n');
