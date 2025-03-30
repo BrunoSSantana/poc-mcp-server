@@ -1,6 +1,6 @@
 import { GraphQLClient } from 'graphql-request';
-import { API_CONFIG } from '../config/api.js';
-import type { Area, Loomer, Form, FormResponse, Project, QueryOptions, Connection } from '../types/index.js';
+import { API_CONFIG } from '../config/api.ts';
+import type { Area, Loomer, Form, FormResponse, Project, QueryOptions, Connection } from '../types/index.ts';
 
 /**
  * GraphQL API client instance

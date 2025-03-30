@@ -23,9 +23,9 @@ export const env = envSchema.parse(process.env);
  * Server configuration
  */
 export const SERVER_CONFIG = {
-  name: env.MCP_SERVER_NAME,
-  version: env.MCP_SERVER_VERSION,
-  description: 'A service that provides access to MCP-related data, including Loomers, forms, form responses, and projects.',
+  name: 'poc-mcp-server',
+  version: '1.0.0',
+  description: 'Proof of concept MCP server',
 } as const;
 
 /**

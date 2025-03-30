@@ -1,48 +1,9 @@
+import { z } from 'zod';
+
 /**
- * Core types for the MCP server implementation
+ * Query options for paginated requests
  */
-
-export interface Area {
-  id: string;
-  name: string | null;
-  created_at: string;
-}
-
-export interface Loomer {
-  id: string;
-  name: string | null;
-  email: string | null;
-  hire_date: string | null;
-  birthday: string | null;
-  area_id: string;
-  created_at: string;
-  area?: Area;
-}
-
-export interface Form {
-  id: string;
-  title: string | null;
-  description: string | null;
-  created_at: string;
-}
-
-export interface FormResponse {
-  id: string;
-  form_id: string;
-  loomer_id: string;
-  responses: Record<string, unknown>;
-  created_at: string;
-  form?: Form;
-  loomer?: Loomer;
-}
-
-export interface Project {
-  id: string;
-  name: string | null;
-  created_at: string;
-}
-
-export interface QueryOptions {
+export type QueryOptions = {
   first?: number;
   after?: string;
   filter?: Record<string, unknown>;
@@ -50,25 +11,131 @@ export interface QueryOptions {
     field: string;
     direction: 'AscNullsFirst' | 'AscNullsLast' | 'DescNullsFirst' | 'DescNullsLast';
   }>;
-}
+};
 
-export interface PageInfo {
-  endCursor: string | null;
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
-  startCursor: string | null;
-}
+/**
+ * MCP response with text content
+ */
+export type McpResponse = {
+  content: McpContent[];
+  _meta?: Record<string, unknown>;
+  isError?: boolean;
+};
 
-export interface Connection<T> {
-  edges: Array<{
-    cursor: string;
-    node: T;
+/**
+ * MCP text content
+ */
+export type McpTextContent = {
+  type: "text";
+  text: string;
+  [key: string]: unknown;
+};
+
+/**
+ * MCP image content
+ */
+export type McpImageContent = {
+  type: "image";
+  data: string;
+  mimeType: string;
+  [key: string]: unknown;
+};
+
+/**
+ * MCP resource content
+ */
+export type McpResourceContent = {
+  type: "resource";
+  resource: {
+    text: string;
+    uri: string;
+    mimeType?: string;
+    [key: string]: unknown;
+  } | {
+    uri: string;
+    blob: string;
+    mimeType?: string;
+    [key: string]: unknown;
+  };
+  [key: string]: unknown;
+};
+
+/**
+ * MCP content
+ */
+export type McpContent = McpTextContent | McpImageContent | McpResourceContent;
+
+/**
+ * Loomer type
+ */
+export type Loomer = {
+  id: string;
+  name: string;
+  email: string | null;
+  area: Area | null;
+};
+
+/**
+ * Form type
+ */
+export type Form = {
+  id: string;
+  title: string;
+  description: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+/**
+ * Form response type
+ */
+export type FormResponse = {
+  id: string;
+  form: Form;
+  loomer: Loomer;
+  answers: Array<{
+    questionId: string;
+    answer: string;
   }>;
-  pageInfo: PageInfo;
-}
+  createdAt: string;
+  updatedAt: string;
+};
 
-export interface ApiError {
-  code: string;
-  message: string;
-  details?: Record<string, unknown>;
-} 
+/**
+ * Project type
+ */
+export type Project = {
+  id: string;
+  name: string;
+  description: string | null;
+  status: 'ACTIVE' | 'INACTIVE' | 'ARCHIVED';
+  createdAt: string;
+  updatedAt: string;
+};
+
+/**
+ * Area type
+ */
+export type Area = {
+  id: string;
+  name: string;
+};
+
+/**
+ * GraphQL response types
+ */
+export type PageInfo = {
+  hasNextPage: boolean;
+  endCursor?: string;
+};
+
+export type Edge<T> = {
+  node: T;
+  cursor: string;
+};
+
+export type Connection<T> = {
+  edges: Edge<T>[];
+  pageInfo: PageInfo;
+  totalCount: number;
+}; 
