@@ -1,0 +1,1114 @@
+"""A high precision floating point value represented as a string"""
+scalar BigFloat
+
+"""
+Boolean expression comparing fields on type "BigFloat"
+"""
+input BigFloatFilter {
+  eq: BigFloat
+  gt: BigFloat
+  gte: BigFloat
+  in: [BigFloat!]
+  is: FilterIs
+  lt: BigFloat
+  lte: BigFloat
+  neq: BigFloat
+}
+
+"""
+Boolean expression comparing fields on type "BigFloatList"
+"""
+input BigFloatListFilter {
+  containedBy: [BigFloat!]
+  contains: [BigFloat!]
+  eq: [BigFloat!]
+  is: FilterIs
+  overlaps: [BigFloat!]
+}
+
+"""An arbitrary size integer represented as a string"""
+scalar BigInt
+
+"""
+Boolean expression comparing fields on type "BigInt"
+"""
+input BigIntFilter {
+  eq: BigInt
+  gt: BigInt
+  gte: BigInt
+  in: [BigInt!]
+  is: FilterIs
+  lt: BigInt
+  lte: BigInt
+  neq: BigInt
+}
+
+"""
+Boolean expression comparing fields on type "BigIntList"
+"""
+input BigIntListFilter {
+  containedBy: [BigInt!]
+  contains: [BigInt!]
+  eq: [BigInt!]
+  is: FilterIs
+  overlaps: [BigInt!]
+}
+
+"""
+Boolean expression comparing fields on type "Boolean"
+"""
+input BooleanFilter {
+  eq: Boolean
+  is: FilterIs
+}
+
+"""
+Boolean expression comparing fields on type "BooleanList"
+"""
+input BooleanListFilter {
+  containedBy: [Boolean!]
+  contains: [Boolean!]
+  eq: [Boolean!]
+  is: FilterIs
+  overlaps: [Boolean!]
+}
+
+"""
+An opaque string using for tracking a position in results during pagination
+"""
+scalar Cursor
+
+"""A date without time information"""
+scalar Date
+
+"""
+Boolean expression comparing fields on type "Date"
+"""
+input DateFilter {
+  eq: Date
+  gt: Date
+  gte: Date
+  in: [Date!]
+  is: FilterIs
+  lt: Date
+  lte: Date
+  neq: Date
+}
+
+"""
+Boolean expression comparing fields on type "DateList"
+"""
+input DateListFilter {
+  containedBy: [Date!]
+  contains: [Date!]
+  eq: [Date!]
+  is: FilterIs
+  overlaps: [Date!]
+}
+
+"""A date and time"""
+scalar Datetime
+
+"""
+Boolean expression comparing fields on type "Datetime"
+"""
+input DatetimeFilter {
+  eq: Datetime
+  gt: Datetime
+  gte: Datetime
+  in: [Datetime!]
+  is: FilterIs
+  lt: Datetime
+  lte: Datetime
+  neq: Datetime
+}
+
+"""
+Boolean expression comparing fields on type "DatetimeList"
+"""
+input DatetimeListFilter {
+  containedBy: [Datetime!]
+  contains: [Datetime!]
+  eq: [Datetime!]
+  is: FilterIs
+  overlaps: [Datetime!]
+}
+
+enum FilterIs {
+  NULL
+  NOT_NULL
+}
+
+"""
+Boolean expression comparing fields on type "Float"
+"""
+input FloatFilter {
+  eq: Float
+  gt: Float
+  gte: Float
+  in: [Float!]
+  is: FilterIs
+  lt: Float
+  lte: Float
+  neq: Float
+}
+
+"""
+Boolean expression comparing fields on type "FloatList"
+"""
+input FloatListFilter {
+  containedBy: [Float!]
+  contains: [Float!]
+  eq: [Float!]
+  is: FilterIs
+  overlaps: [Float!]
+}
+
+"""
+Boolean expression comparing fields on type "ID"
+"""
+input IDFilter {
+  eq: ID
+}
+
+"""
+Boolean expression comparing fields on type "Int"
+"""
+input IntFilter {
+  eq: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  is: FilterIs
+  lt: Int
+  lte: Int
+  neq: Int
+}
+
+"""
+Boolean expression comparing fields on type "IntList"
+"""
+input IntListFilter {
+  containedBy: [Int!]
+  contains: [Int!]
+  eq: [Int!]
+  is: FilterIs
+  overlaps: [Int!]
+}
+
+"""A Javascript Object Notation value serialized as a string"""
+scalar JSON
+
+"""The root type for creating and mutating data"""
+type Mutation {
+  """Deletes zero or more records from the `areas` collection"""
+  deleteFromareasCollection(
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: areasFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): areasDeleteResponse!
+
+  """Deletes zero or more records from the `form_responses` collection"""
+  deleteFromform_responsesCollection(
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: form_responsesFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): form_responsesDeleteResponse!
+
+  """Deletes zero or more records from the `forms` collection"""
+  deleteFromformsCollection(
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: formsFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): formsDeleteResponse!
+
+  """Deletes zero or more records from the `loomers` collection"""
+  deleteFromloomersCollection(
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: loomersFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): loomersDeleteResponse!
+
+  """Deletes zero or more records from the `projects` collection"""
+  deleteFromprojectsCollection(
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: projectsFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): projectsDeleteResponse!
+
+  """Adds one or more `areas` records to the collection"""
+  insertIntoareasCollection(objects: [areasInsertInput!]!): areasInsertResponse
+
+  """Adds one or more `form_responses` records to the collection"""
+  insertIntoform_responsesCollection(objects: [form_responsesInsertInput!]!): form_responsesInsertResponse
+
+  """Adds one or more `forms` records to the collection"""
+  insertIntoformsCollection(objects: [formsInsertInput!]!): formsInsertResponse
+
+  """Adds one or more `loomers` records to the collection"""
+  insertIntoloomersCollection(objects: [loomersInsertInput!]!): loomersInsertResponse
+
+  """Adds one or more `projects` records to the collection"""
+  insertIntoprojectsCollection(objects: [projectsInsertInput!]!): projectsInsertResponse
+
+  """Updates zero or more records in the `areas` collection"""
+  updateareasCollection(
+    """
+    Fields that are set will be updated for all records matching the `filter`
+    """
+    set: areasUpdateInput!
+
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: areasFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): areasUpdateResponse!
+
+  """Updates zero or more records in the `form_responses` collection"""
+  updateform_responsesCollection(
+    """
+    Fields that are set will be updated for all records matching the `filter`
+    """
+    set: form_responsesUpdateInput!
+
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: form_responsesFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): form_responsesUpdateResponse!
+
+  """Updates zero or more records in the `forms` collection"""
+  updateformsCollection(
+    """
+    Fields that are set will be updated for all records matching the `filter`
+    """
+    set: formsUpdateInput!
+
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: formsFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): formsUpdateResponse!
+
+  """Updates zero or more records in the `loomers` collection"""
+  updateloomersCollection(
+    """
+    Fields that are set will be updated for all records matching the `filter`
+    """
+    set: loomersUpdateInput!
+
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: loomersFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): loomersUpdateResponse!
+
+  """Updates zero or more records in the `projects` collection"""
+  updateprojectsCollection(
+    """
+    Fields that are set will be updated for all records matching the `filter`
+    """
+    set: projectsUpdateInput!
+
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: projectsFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): projectsUpdateResponse!
+}
+
+interface Node {
+  """Retrieves a record by `ID`"""
+  nodeId: ID!
+}
+
+"""Any type not handled by the type system"""
+scalar Opaque
+
+"""
+Boolean expression comparing fields on type "Opaque"
+"""
+input OpaqueFilter {
+  eq: Opaque
+  is: FilterIs
+}
+
+"""Defines a per-field sorting order"""
+enum OrderByDirection {
+  """Ascending order, nulls first"""
+  AscNullsFirst
+
+  """Ascending order, nulls last"""
+  AscNullsLast
+
+  """Descending order, nulls first"""
+  DescNullsFirst
+
+  """Descending order, nulls last"""
+  DescNullsLast
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+}
+
+"""The root type for querying data"""
+type Query {
+  """A pagable collection of type `areas`"""
+  areasCollection(
+    """Query the first `n` records in the collection"""
+    first: Int
+
+    """Query the last `n` records in the collection"""
+    last: Int
+
+    """Query values in the collection before the provided cursor"""
+    before: Cursor
+
+    """Query values in the collection after the provided cursor"""
+    after: Cursor
+
+    """
+    Skip n values from the after cursor. Alternative to cursor pagination. Backward pagination not supported.
+    """
+    offset: Int
+
+    """Filters to apply to the results set when querying from the collection"""
+    filter: areasFilter
+
+    """Sort order to apply to the collection"""
+    orderBy: [areasOrderBy!]
+  ): areasConnection
+
+  """A pagable collection of type `form_responses`"""
+  form_responsesCollection(
+    """Query the first `n` records in the collection"""
+    first: Int
+
+    """Query the last `n` records in the collection"""
+    last: Int
+
+    """Query values in the collection before the provided cursor"""
+    before: Cursor
+
+    """Query values in the collection after the provided cursor"""
+    after: Cursor
+
+    """
+    Skip n values from the after cursor. Alternative to cursor pagination. Backward pagination not supported.
+    """
+    offset: Int
+
+    """Filters to apply to the results set when querying from the collection"""
+    filter: form_responsesFilter
+
+    """Sort order to apply to the collection"""
+    orderBy: [form_responsesOrderBy!]
+  ): form_responsesConnection
+
+  """A pagable collection of type `forms`"""
+  formsCollection(
+    """Query the first `n` records in the collection"""
+    first: Int
+
+    """Query the last `n` records in the collection"""
+    last: Int
+
+    """Query values in the collection before the provided cursor"""
+    before: Cursor
+
+    """Query values in the collection after the provided cursor"""
+    after: Cursor
+
+    """
+    Skip n values from the after cursor. Alternative to cursor pagination. Backward pagination not supported.
+    """
+    offset: Int
+
+    """Filters to apply to the results set when querying from the collection"""
+    filter: formsFilter
+
+    """Sort order to apply to the collection"""
+    orderBy: [formsOrderBy!]
+  ): formsConnection
+
+  """A pagable collection of type `loomers`"""
+  loomersCollection(
+    """Query the first `n` records in the collection"""
+    first: Int
+
+    """Query the last `n` records in the collection"""
+    last: Int
+
+    """Query values in the collection before the provided cursor"""
+    before: Cursor
+
+    """Query values in the collection after the provided cursor"""
+    after: Cursor
+
+    """
+    Skip n values from the after cursor. Alternative to cursor pagination. Backward pagination not supported.
+    """
+    offset: Int
+
+    """Filters to apply to the results set when querying from the collection"""
+    filter: loomersFilter
+
+    """Sort order to apply to the collection"""
+    orderBy: [loomersOrderBy!]
+  ): loomersConnection
+
+  """Retrieve a record by its `ID`"""
+  node(
+    """The record's `ID`"""
+    nodeId: ID!
+  ): Node
+
+  """A pagable collection of type `projects`"""
+  projectsCollection(
+    """Query the first `n` records in the collection"""
+    first: Int
+
+    """Query the last `n` records in the collection"""
+    last: Int
+
+    """Query values in the collection before the provided cursor"""
+    before: Cursor
+
+    """Query values in the collection after the provided cursor"""
+    after: Cursor
+
+    """
+    Skip n values from the after cursor. Alternative to cursor pagination. Backward pagination not supported.
+    """
+    offset: Int
+
+    """Filters to apply to the results set when querying from the collection"""
+    filter: projectsFilter
+
+    """Sort order to apply to the collection"""
+    orderBy: [projectsOrderBy!]
+  ): projectsConnection
+}
+
+"""
+Boolean expression comparing fields on type "String"
+"""
+input StringFilter {
+  eq: String
+  gt: String
+  gte: String
+  ilike: String
+  in: [String!]
+  iregex: String
+  is: FilterIs
+  like: String
+  lt: String
+  lte: String
+  neq: String
+  regex: String
+  startsWith: String
+}
+
+"""
+Boolean expression comparing fields on type "StringList"
+"""
+input StringListFilter {
+  containedBy: [String!]
+  contains: [String!]
+  eq: [String!]
+  is: FilterIs
+  overlaps: [String!]
+}
+
+"""A time without date information"""
+scalar Time
+
+"""
+Boolean expression comparing fields on type "Time"
+"""
+input TimeFilter {
+  eq: Time
+  gt: Time
+  gte: Time
+  in: [Time!]
+  is: FilterIs
+  lt: Time
+  lte: Time
+  neq: Time
+}
+
+"""
+Boolean expression comparing fields on type "TimeList"
+"""
+input TimeListFilter {
+  containedBy: [Time!]
+  contains: [Time!]
+  eq: [Time!]
+  is: FilterIs
+  overlaps: [Time!]
+}
+
+"""A universally unique identifier"""
+scalar UUID
+
+"""
+Boolean expression comparing fields on type "UUID"
+"""
+input UUIDFilter {
+  eq: UUID
+  in: [UUID!]
+  is: FilterIs
+  neq: UUID
+}
+
+"""
+Boolean expression comparing fields on type "UUIDList"
+"""
+input UUIDListFilter {
+  containedBy: [UUID!]
+  contains: [UUID!]
+  eq: [UUID!]
+  is: FilterIs
+  overlaps: [UUID!]
+}
+
+type areas implements Node {
+  """Globally Unique Record Identifier"""
+  nodeId: ID!
+  id: UUID!
+  created_at: Datetime!
+  name: String
+  loomersCollection(
+    """Query the first `n` records in the collection"""
+    first: Int
+
+    """Query the last `n` records in the collection"""
+    last: Int
+
+    """Query values in the collection before the provided cursor"""
+    before: Cursor
+
+    """Query values in the collection after the provided cursor"""
+    after: Cursor
+
+    """
+    Skip n values from the after cursor. Alternative to cursor pagination. Backward pagination not supported.
+    """
+    offset: Int
+
+    """Filters to apply to the results set when querying from the collection"""
+    filter: loomersFilter
+
+    """Sort order to apply to the collection"""
+    orderBy: [loomersOrderBy!]
+  ): loomersConnection
+}
+
+type areasConnection {
+  edges: [areasEdge!]!
+  pageInfo: PageInfo!
+}
+
+type areasDeleteResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [areas!]!
+}
+
+type areasEdge {
+  cursor: String!
+  node: areas!
+}
+
+input areasFilter {
+  id: UUIDFilter
+  created_at: DatetimeFilter
+  name: StringFilter
+  nodeId: IDFilter
+
+  """
+  Returns true only if all its inner filters are true, otherwise returns false
+  """
+  and: [areasFilter!]
+
+  """
+  Returns true if at least one of its inner filters is true, otherwise returns false
+  """
+  or: [areasFilter!]
+
+  """Negates a filter"""
+  not: areasFilter
+}
+
+input areasInsertInput {
+  id: UUID
+  created_at: Datetime
+  name: String
+}
+
+type areasInsertResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [areas!]!
+}
+
+input areasOrderBy {
+  id: OrderByDirection
+  created_at: OrderByDirection
+  name: OrderByDirection
+}
+
+input areasUpdateInput {
+  id: UUID
+  created_at: Datetime
+  name: String
+}
+
+type areasUpdateResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [areas!]!
+}
+
+type form_responses implements Node {
+  """Globally Unique Record Identifier"""
+  nodeId: ID!
+  id: BigInt!
+  created_at: Datetime!
+  form_id: BigInt
+  loomer_id: BigInt
+  responses: JSON
+  forms: forms
+  loomers: loomers
+}
+
+type form_responsesConnection {
+  edges: [form_responsesEdge!]!
+  pageInfo: PageInfo!
+}
+
+type form_responsesDeleteResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [form_responses!]!
+}
+
+type form_responsesEdge {
+  cursor: String!
+  node: form_responses!
+}
+
+input form_responsesFilter {
+  id: BigIntFilter
+  created_at: DatetimeFilter
+  form_id: BigIntFilter
+  loomer_id: BigIntFilter
+  nodeId: IDFilter
+
+  """
+  Returns true only if all its inner filters are true, otherwise returns false
+  """
+  and: [form_responsesFilter!]
+
+  """
+  Returns true if at least one of its inner filters is true, otherwise returns false
+  """
+  or: [form_responsesFilter!]
+
+  """Negates a filter"""
+  not: form_responsesFilter
+}
+
+input form_responsesInsertInput {
+  created_at: Datetime
+  form_id: BigInt
+  loomer_id: BigInt
+  responses: JSON
+}
+
+type form_responsesInsertResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [form_responses!]!
+}
+
+input form_responsesOrderBy {
+  id: OrderByDirection
+  created_at: OrderByDirection
+  form_id: OrderByDirection
+  loomer_id: OrderByDirection
+}
+
+input form_responsesUpdateInput {
+  created_at: Datetime
+  form_id: BigInt
+  loomer_id: BigInt
+  responses: JSON
+}
+
+type form_responsesUpdateResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [form_responses!]!
+}
+
+type forms implements Node {
+  """Globally Unique Record Identifier"""
+  nodeId: ID!
+  id: BigInt!
+  created_at: Datetime!
+  title: String
+  description: String
+  form_responsesCollection(
+    """Query the first `n` records in the collection"""
+    first: Int
+
+    """Query the last `n` records in the collection"""
+    last: Int
+
+    """Query values in the collection before the provided cursor"""
+    before: Cursor
+
+    """Query values in the collection after the provided cursor"""
+    after: Cursor
+
+    """
+    Skip n values from the after cursor. Alternative to cursor pagination. Backward pagination not supported.
+    """
+    offset: Int
+
+    """Filters to apply to the results set when querying from the collection"""
+    filter: form_responsesFilter
+
+    """Sort order to apply to the collection"""
+    orderBy: [form_responsesOrderBy!]
+  ): form_responsesConnection
+}
+
+type formsConnection {
+  edges: [formsEdge!]!
+  pageInfo: PageInfo!
+}
+
+type formsDeleteResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [forms!]!
+}
+
+type formsEdge {
+  cursor: String!
+  node: forms!
+}
+
+input formsFilter {
+  id: BigIntFilter
+  created_at: DatetimeFilter
+  title: StringFilter
+  description: StringFilter
+  nodeId: IDFilter
+
+  """
+  Returns true only if all its inner filters are true, otherwise returns false
+  """
+  and: [formsFilter!]
+
+  """
+  Returns true if at least one of its inner filters is true, otherwise returns false
+  """
+  or: [formsFilter!]
+
+  """Negates a filter"""
+  not: formsFilter
+}
+
+input formsInsertInput {
+  created_at: Datetime
+  title: String
+  description: String
+}
+
+type formsInsertResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [forms!]!
+}
+
+input formsOrderBy {
+  id: OrderByDirection
+  created_at: OrderByDirection
+  title: OrderByDirection
+  description: OrderByDirection
+}
+
+input formsUpdateInput {
+  created_at: Datetime
+  title: String
+  description: String
+}
+
+type formsUpdateResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [forms!]!
+}
+
+type loomers implements Node {
+  """Globally Unique Record Identifier"""
+  nodeId: ID!
+  id: BigInt!
+  created_at: Datetime!
+  name: String
+  email: String
+  hire_date: Date
+  birthday: Date
+  area_id: UUID
+  areas: areas
+  form_responsesCollection(
+    """Query the first `n` records in the collection"""
+    first: Int
+
+    """Query the last `n` records in the collection"""
+    last: Int
+
+    """Query values in the collection before the provided cursor"""
+    before: Cursor
+
+    """Query values in the collection after the provided cursor"""
+    after: Cursor
+
+    """
+    Skip n values from the after cursor. Alternative to cursor pagination. Backward pagination not supported.
+    """
+    offset: Int
+
+    """Filters to apply to the results set when querying from the collection"""
+    filter: form_responsesFilter
+
+    """Sort order to apply to the collection"""
+    orderBy: [form_responsesOrderBy!]
+  ): form_responsesConnection
+}
+
+type loomersConnection {
+  edges: [loomersEdge!]!
+  pageInfo: PageInfo!
+}
+
+type loomersDeleteResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [loomers!]!
+}
+
+type loomersEdge {
+  cursor: String!
+  node: loomers!
+}
+
+input loomersFilter {
+  id: BigIntFilter
+  created_at: DatetimeFilter
+  name: StringFilter
+  email: StringFilter
+  hire_date: DateFilter
+  birthday: DateFilter
+  area_id: UUIDFilter
+  nodeId: IDFilter
+
+  """
+  Returns true only if all its inner filters are true, otherwise returns false
+  """
+  and: [loomersFilter!]
+
+  """
+  Returns true if at least one of its inner filters is true, otherwise returns false
+  """
+  or: [loomersFilter!]
+
+  """Negates a filter"""
+  not: loomersFilter
+}
+
+input loomersInsertInput {
+  created_at: Datetime
+  name: String
+  email: String
+  hire_date: Date
+  birthday: Date
+  area_id: UUID
+}
+
+type loomersInsertResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [loomers!]!
+}
+
+input loomersOrderBy {
+  id: OrderByDirection
+  created_at: OrderByDirection
+  name: OrderByDirection
+  email: OrderByDirection
+  hire_date: OrderByDirection
+  birthday: OrderByDirection
+  area_id: OrderByDirection
+}
+
+input loomersUpdateInput {
+  created_at: Datetime
+  name: String
+  email: String
+  hire_date: Date
+  birthday: Date
+  area_id: UUID
+}
+
+type loomersUpdateResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [loomers!]!
+}
+
+type projects implements Node {
+  """Globally Unique Record Identifier"""
+  nodeId: ID!
+  id: UUID!
+  created_at: Datetime!
+  name: String
+}
+
+type projectsConnection {
+  edges: [projectsEdge!]!
+  pageInfo: PageInfo!
+}
+
+type projectsDeleteResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [projects!]!
+}
+
+type projectsEdge {
+  cursor: String!
+  node: projects!
+}
+
+input projectsFilter {
+  id: UUIDFilter
+  created_at: DatetimeFilter
+  name: StringFilter
+  nodeId: IDFilter
+
+  """
+  Returns true only if all its inner filters are true, otherwise returns false
+  """
+  and: [projectsFilter!]
+
+  """
+  Returns true if at least one of its inner filters is true, otherwise returns false
+  """
+  or: [projectsFilter!]
+
+  """Negates a filter"""
+  not: projectsFilter
+}
+
+input projectsInsertInput {
+  id: UUID
+  created_at: Datetime
+  name: String
+}
+
+type projectsInsertResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [projects!]!
+}
+
+input projectsOrderBy {
+  id: OrderByDirection
+  created_at: OrderByDirection
+  name: OrderByDirection
+}
+
+input projectsUpdateInput {
+  id: UUID
+  created_at: Datetime
+  name: String
+}
+
+type projectsUpdateResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [projects!]!
+}
