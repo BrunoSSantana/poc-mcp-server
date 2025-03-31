@@ -65,7 +65,6 @@ describe('Form Responses Service', () => {
           startCursor: 'cursor1',
           endCursor: 'cursor1'
         },
-        totalCount: 1
       }
 
       const mockResponse = {
@@ -88,7 +87,6 @@ describe('Form Responses Service', () => {
 
       expect(result).toEqual(mockFormResponses)
       expect(result.edges).toHaveLength(1)
-      expect(result.totalCount).toBe(1)
       expect(result.pageInfo).toEqual({
         hasNextPage: false,
         hasPreviousPage: false,

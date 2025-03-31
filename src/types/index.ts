@@ -145,5 +145,4 @@ export interface Edge<T> {
 export interface Connection<T> {
   edges: Edge<T>[];
   pageInfo: PageInfo;
-  totalCount: number;
 } 

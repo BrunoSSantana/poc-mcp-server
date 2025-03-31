@@ -53,7 +53,6 @@ export const getLoomersTool = {
       return {
         content: [content],
         _meta: {
-          totalCount: response.totalCount,
           hasNextPage: response.pageInfo.hasNextPage,
           endCursor: response.pageInfo.endCursor
         }

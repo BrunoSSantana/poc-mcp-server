@@ -5,7 +5,11 @@ import type { Area, Loomer, Form, FormResponse, Project, QueryOptions, Connectio
 /**
  * GraphQL API client instance
  */
-const client = new GraphQLClient(API_CONFIG.url);
+const client = new GraphQLClient(API_CONFIG.url, {
+  headers: {
+    apiKey: API_CONFIG.apiKey,
+  }
+});
 
 /**
  * Get the number of Loomers in a specific area

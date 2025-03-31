@@ -42,7 +42,6 @@ describe('Projects Service', () => {
           startCursor: 'cursor1',
           endCursor: 'cursor1'
         },
-        totalCount: 1
       }
 
       const mockResponse = {
@@ -65,7 +64,6 @@ describe('Projects Service', () => {
 
       expect(result).toEqual(mockProjects)
       expect(result.edges).toHaveLength(1)
-      expect(result.totalCount).toBe(1)
       expect(result.pageInfo).toEqual({
         hasNextPage: false,
         hasPreviousPage: false,
