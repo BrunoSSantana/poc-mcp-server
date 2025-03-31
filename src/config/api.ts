@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { config } from 'dotenv';
-
+import { createClient } from '../../operations-sdk'
 config();
 
 /**
@@ -8,6 +8,7 @@ config();
  */
 const envSchema = z.object({
   GRAPHQL_API: z.string().url(),
+  API_KEY: z.string(),
   MCP_SERVER_NAME: z.string().default('mcp-api-service'),
   MCP_SERVER_VERSION: z.string().default('1.0.0'),
   PORT: z.string().transform(Number).default('3000'),
@@ -18,6 +19,13 @@ const envSchema = z.object({
  * Validated environment variables
  */
 export const env = envSchema.parse(process.env);
+
+export const client = createClient({
+  url: env.GRAPHQL_API,
+  headers: {
+    apikey: env.API_KEY,
+  }
+})
 
 /**
  * Server configuration
@@ -59,6 +67,7 @@ export const TOOL_CONFIG = {
  */
 export const API_CONFIG = {
   url: env.GRAPHQL_API,
+  apiKey: env.API_KEY,
   defaultQueryOptions: {
     limit: 10,
   },

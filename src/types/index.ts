@@ -131,10 +131,10 @@ export interface Area {
  * GraphQL response types
  */
 export interface PageInfo {
-  endCursor?: string;
+  endCursor?: string | null;
   hasNextPage: boolean;
   hasPreviousPage: boolean;
-  startCursor?: string;
+  startCursor?: string | null;
 }
 
 export interface Edge<T> {
@@ -145,5 +145,4 @@ export interface Edge<T> {
 export interface Connection<T> {
   edges: Edge<T>[];
   pageInfo: PageInfo;
-  totalCount: number;
 } 
