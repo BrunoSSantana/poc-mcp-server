@@ -3,13 +3,9 @@ import { getLoomersInArea, getLoomers, getForms, getFormResponses, getProjects }
 import type { Connection, Loomer, Form, FormResponse, Project } from '../../src/types/index.js';
 
 describe('API Services', () => {
-  console.log('getLoomers');
   describe('getLoomers', () => {
-    console.log('getLoomers describe');
     it('should return a paginated list of loomers', async () => {
-      console.log('getLoomers it');
       const result = await getLoomers({ first: 10 });
-      console.log('result', result);
       // Validate response structure
       expect(result.edges).toBeDefined();
       expect(result.pageInfo).toBeDefined();
@@ -55,7 +51,7 @@ describe('API Services', () => {
 
   describe('getLoomersInArea', () => {
     it('should return the number of loomers in an area', async () => {
-      const areaId = '1'; // Use a known area ID
+      const areaId = '042fa576-56d3-48bc-a295-6886adda528d'; // Use a known area ID
       const count = await getLoomersInArea(areaId);
 
       expect(typeof count).toBe('number');
@@ -105,20 +101,20 @@ describe('API Services', () => {
       if (result.edges.length > 0) {
         const firstResponse = result.edges[0].node;
         expect(firstResponse.id).toBeDefined();
-        expect('formId' in firstResponse).toBe(true);
-        expect('loomerId' in firstResponse).toBe(true);
+        expect('form_id' in firstResponse).toBe(true);
+        expect('loomer_id' in firstResponse).toBe(true);
         expect(firstResponse.responses).toBeDefined();
       }
     });
 
     it('should filter form responses by formId', async () => {
       const formId = '1'; // Use a known form ID
-      const filter = { formId: { eq: formId } };
+      const filter = { form_id: { eq: formId } };
       const result = await getFormResponses({ filter });
 
       // Validate filtered results
       result.edges.forEach(({ node }) => {
-        expect(node.formId).toBe(formId);
+        expect(node.form_id).toBe(formId);
       });
     });
   });

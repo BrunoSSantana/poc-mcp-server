@@ -210,17 +210,17 @@ export async function getFormResponses(
 				cursor,
 				node: {
 					...node,
-					createdAt: node.created_at,
-					formId: node.form_id,
-					loomerId: node.loomer_id,
-					form: node.forms && {
+					created_at: node.created_at,
+					form_id: node.form_id,
+					loomer_id: node.loomer_id,
+					forms: node.forms && {
 						...node.forms,
-						createdAt: node.forms.created_at,
+						created_at: node.forms.created_at,
 					},
 					loomer: node.loomers && {
 						...node.loomers,
-						createdAt: node.loomers.created_at,
-						hireDate: node.loomers.hire_date,
+						created_at: node.loomers.created_at,
+						hire_date: node.loomers.hire_date,
 					},
 				},
 			})) ?? [],

@@ -105,7 +105,7 @@ export interface FormResponse {
 	nodeId: string;
 	id: string;
 	createdAt: string;
-	formId: string | null;
+	form_id: string | null;
 	loomerId: string | null;
 	responses: Record<string, unknown>;
 	form: Form | null;
