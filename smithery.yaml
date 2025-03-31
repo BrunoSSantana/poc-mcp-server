@@ -2,7 +2,7 @@ name: poc-operations-mcp-server
 description: A Model Context Protocol (MCP) server that provides tools to query data from operations database.
 version: 1.0.0
 author: BrunoSSantana
-repository: https://github.com/brunossantana/poc-operations-mcp-server
+repository: https://github.com/BrunoSSantana/poc-mcp-server
 license: MIT
 
 # Smithery.ai configuration
@@ -15,15 +15,14 @@ startCommand:
     # A function that produces the CLI command to start the MCP on stdio.
     |-
     (config) => ({
-      "command": "node",
+      "command": "tsx",
       "args": [
-        "--no-warnings",
-        "dist/index.js"
+        "src/index.ts"
       ]
     })
   
 tools:
-  - name: get-loomers
+  - name: get_loomers
     description: Retrieves a paginated list of loomers with optional filtering
     parameters:
       - name: first
