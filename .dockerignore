@@ -1,0 +1,19 @@
+.env.example
+.git
+.gitignore
+.vscode
+node_modules
+dist
+
+# Smithery
+smithery.yaml
+
+# Coverage
+coverage
+
+# Logs
+logs
+
+# Test files
+test
+.vitest

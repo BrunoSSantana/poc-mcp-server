@@ -1,0 +1,175 @@
+name: poc-operations-mcp-server
+description: A Model Context Protocol (MCP) server that provides tools to query data from operations database.
+version: 1.0.0
+author: BrunoSSantana
+repository: https://github.com/brunossantana/poc-operations-mcp-server
+license: MIT
+
+# Smithery.ai configuration
+startCommand:
+  type: stdio
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    {}
+  commandFunction:
+    # A function that produces the CLI command to start the MCP on stdio.
+    |-
+    (config) => ({
+      "command": "node",
+      "args": [
+        "--no-warnings",
+        "dist/index.js"
+      ]
+    })
+  
+tools:
+  - name: get-loomers
+    description: Retrieves a paginated list of loomers with optional filtering
+    parameters:
+      - name: first
+        type: number
+        description: Number of records to return
+        optional: true
+      - name: after
+        type: string
+        description: Cursor for pagination
+        optional: true
+      - name: filter
+        type: object
+        description: Filter criteria for loomers
+        optional: true
+        properties:
+          name:
+            type: string
+            description: Filter by name
+          email:
+            type: string
+            description: Filter by email
+          area_id:
+            type: string
+            description: Filter by area ID
+      - name: orderBy
+        type: array
+        description: Sort criteria for loomers
+        optional: true
+        items:
+          type: object
+          properties:
+            field:
+              type: string
+              description: Field to sort by
+            direction:
+              type: string
+              enum: [AscNullsFirst, AscNullsLast, DescNullsFirst, DescNullsLast]
+              description: Sort direction
+
+  - name: get-forms
+    description: Fetches forms with optional filtering and pagination
+    parameters:
+      - name: first
+        type: number
+        description: Number of records to return
+        optional: true
+      - name: after
+        type: string
+        description: Cursor for pagination
+        optional: true
+      - name: filter
+        type: object
+        description: Filter criteria for forms
+        optional: true
+        properties:
+          title:
+            type: string
+            description: Filter by title
+          description:
+            type: string
+            description: Filter by description
+      - name: orderBy
+        type: array
+        description: Sort criteria for forms
+        optional: true
+        items:
+          type: object
+          properties:
+            field:
+              type: string
+              description: Field to sort by
+            direction:
+              type: string
+              enum: [AscNullsFirst, AscNullsLast, DescNullsFirst, DescNullsLast]
+              description: Sort direction
+
+  - name: get-form-responses
+    description: Retrieves form responses with optional filtering and pagination
+    parameters:
+      - name: first
+        type: number
+        description: Number of records to return
+        optional: true
+      - name: after
+        type: string
+        description: Cursor for pagination
+        optional: true
+      - name: filter
+        type: object
+        description: Filter criteria for form responses
+        optional: true
+        properties:
+          form_id:
+            type: string
+            description: Filter by form ID
+          loomer_id:
+            type: string
+            description: Filter by loomer ID
+      - name: orderBy
+        type: array
+        description: Sort criteria for form responses
+        optional: true
+        items:
+          type: object
+          properties:
+            field:
+              type: string
+              description: Field to sort by
+            direction:
+              type: string
+              enum: [AscNullsFirst, AscNullsLast, DescNullsFirst, DescNullsLast]
+              description: Sort direction
+
+  - name: get-projects
+    description: Retrieves projects with optional filtering and pagination
+    parameters:
+      - name: first
+        type: number
+        description: Number of records to return
+        optional: true
+      - name: after
+        type: string
+        description: Cursor for pagination
+        optional: true
+      - name: filter
+        type: object
+        description: Filter criteria for projects
+        optional: true
+        properties:
+          name:
+            type: string
+            description: Filter by name
+      - name: orderBy
+        type: array
+        description: Sort criteria for projects
+        optional: true
+        items:
+          type: object
+          properties:
+            field:
+              type: string
+              description: Field to sort by
+            direction:
+              type: string
+              enum: [AscNullsFirst, AscNullsLast, DescNullsFirst, DescNullsLast]
+              description: Sort direction
+
+  - name: check-status
+    description: Verifies if the API is alive and responding 
